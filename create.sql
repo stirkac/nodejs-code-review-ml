@@ -1,0 +1,28 @@
+CREATE TABLE "public"."code_metric" (
+  "id" bigserial NOT NULL,
+  "physical_sloc" float8 NOT NULL,
+  "logical_sloc" float8 NOT NULL,
+  "cyclomatic" float8 NOT NULL,
+  "cyclomatic_density" float8 NOT NULL,
+  "halstead_length" float8 NOT NULL,
+  "halstead_vocabulary" float8 NOT NULL,
+  "halstead_difficulty" float8 NOT NULL,
+  "halstead_volume" float8 NOT NULL,
+  "halstead_effort" float8 NOT NULL,
+  "halstead_bugs" float8 NOT NULL,
+  "halstead_time" float8 NOT NULL,
+  "function_count" float8 NOT NULL,
+  "dependency_count" float8 NOT NULL,
+  "maintainability" float8 NOT NULL,
+  "valid" boolean NOT NULL,
+  "total_deletions" float8 NOT NULL,
+  "total_additions" float8 NOT NULL,
+  "additions" float8 NOT NULL,
+  "deletions" float8 NOT NULL,
+  "time_since_bug" float8 NOT NULL,
+  "commit_count" float8 NOT NULL,
+  "author_count" float8 NOT NULL,
+  "is_buggy" boolean NOT NULL,
+  PRIMARY KEY ("id")
+)
+WITH (OIDS=FALSE);
