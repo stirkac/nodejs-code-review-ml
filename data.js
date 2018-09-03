@@ -9,8 +9,9 @@ var rawMetrics = null;
 async function load(){
   console.log("DB load...");
   const Metric = await orm.getCollection();
-  rawMetrics = await Metric.find().limit(10000); // TODO: improve and randomize sampling, maybe load by batches
-  return rawMetrics
+  const q = await Metric.find().limit(100000); // TODO: improve and randomize sampling, maybe load by batches
+  rawMetrics = q.map(({filename, ...keepAttrs}) => keepAttrs);
+  return rawMetrics;
 }
 
 async function getModel() {
@@ -48,6 +49,7 @@ async function getData(testSplit) {
   if (rawMetrics == null) {
     await load();
   }
+  console.log(rawMetrics);
 
   return tf.tidy(() => {
 
@@ -65,8 +67,6 @@ async function getData(testSplit) {
       example = Object.values(row);
       const target = example[example.length - 1] ? 1 : 0;
       const data = example.slice(0, example.length - 1);
-      console.log("data: "+data);
-      console.log("target: "+target);
       dataByClass[target].push(data);
       targetsByClass[target].push(target);
     }

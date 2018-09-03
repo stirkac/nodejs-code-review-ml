@@ -31,7 +31,7 @@ function getCodeMetrics(source) {
       "maintainability": m.maintainability,
       "valid": true
     }
-    
+
   } catch(err){
     console.log("Escomplex error: "+err+"\nSource: "+source);
     return {
@@ -61,21 +61,19 @@ async function save(history, fileName, buggy){
   const codeMetrics = getCodeMetrics(source.toString());
 
   var authors = [];
-  var processMetrics = { 
-    "total_deletions": 0, 
-    "total_additions": 0, 
-    "additions": null, 
+  var processMetrics = {
+    "total_deletions": 0,
+    "total_additions": 0,
+    "additions": null,
     "deletions": null,
     "time_since_bug": -1,
     "commit_count": history.length,
     "author_count": null,
     "is_buggy": buggy
   };
-  var createdAt = commit.timeMs();
 
   for(const historyEntry of history){
     historyCommit = historyEntry['commit'];
-    historyCommit.timeMs() < createdAt ? createdAt = historyCommit.timeMs() : createdAt;
 
     authors.push(historyCommit.author().email+historyCommit.author().name);
 
@@ -93,7 +91,7 @@ async function save(history, fileName, buggy){
         // even though history is for single file, commit still gives us all files so we must check first
         if (patch.newFile().path() == fileName || patch.oldFile().path == fileName) {
           for (var key of ["total_deletions", "total_additions"]) {
-            processMetrics[key] += patch.lineStats()[key]; 
+            processMetrics[key] += patch.lineStats()[key];
           }
           lineStats = patch.lineStats()
           processMetrics["total_additions"] += lineStats["total_additions"];
@@ -112,7 +110,8 @@ async function save(history, fileName, buggy){
 
   const metrics = {
     ...codeMetrics,
-    ...processMetrics
+    ...processMetrics,
+    ...{ "filename": fileName+"@"+history[0]['commit'].id() }
   }
   console.log(metrics)
   return Model.create(metrics);

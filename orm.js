@@ -35,6 +35,7 @@ function getCollection(){
       time_since_bug: {type: 'number', autoMigrations: { columnType: 'FLOAT'}},
       commit_count: {type: 'number', autoMigrations: { columnType: 'FLOAT'}},
       author_count: {type: 'number', autoMigrations: { columnType: 'FLOAT'}},
+      filename: {type: 'string' },
       is_buggy: {type: 'boolean'},
     }
   });

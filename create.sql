@@ -23,6 +23,7 @@ CREATE TABLE "public"."code_metric" (
   "commit_count" float8 NOT NULL,
   "author_count" float8 NOT NULL,
   "is_buggy" boolean NOT NULL,
+  "filename" varchar(1024) UNIQUE NOT NULL,
   PRIMARY KEY ("id")
 )
 WITH (OIDS=FALSE);

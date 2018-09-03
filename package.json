@@ -5,7 +5,7 @@
   "author": "Sebastjan",
   "license": "MIT",
   "scripts": {
-    "start": "node get_data.js",
+    "start": "node train_data.js",
     "train": "node train_model.js"
   },
   "dependencies": {
