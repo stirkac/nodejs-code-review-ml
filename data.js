@@ -56,7 +56,6 @@ async function getData(testSplit) {
   if (rawMetrics == null) {
     await load();
   }
-  console.log(rawMetrics);
 
   return tf.tidy(() => {
 
