@@ -23,9 +23,16 @@ async function getModel() {
 
   model.add(tf.layers.dense(
     {
-      units: 150,
-      inputShape: [Object.keys(rawMetrics[0]).length - 1], // how many cols we get minus label
-      activation: 'sigmoid'
+      units: 1024,
+      inputShape: [Object.keys(rawMetrics[0]).length - 1], // how many features we have minus label
+      activation: 'relu' // ReLu here to decrease the number of activations
+    }
+  ));
+
+  model.add(tf.layers.dense(
+    {
+      units: 128,
+      activation: 'sigmoid' // for analog activation
     }
   ));
 
