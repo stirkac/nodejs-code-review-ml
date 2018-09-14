@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "start": "node train_data.js",
-    "train": "node train_model.js"
+    "train": "node train_model.js",
+    "predict": "node predict.js"
   },
   "dependencies": {
     "@tensorflow/tfjs": "^0.12.2",

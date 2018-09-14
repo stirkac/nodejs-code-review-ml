@@ -4,7 +4,6 @@ const nodegit = require('nodegit'),
     orm = require("./orm"),
     localPath = require("path").join(__dirname, "tmp");
 
-var repo;
 var Model;
 
 function isBuggy(message) {
@@ -54,7 +53,7 @@ function getCodeMetrics(source) {
   }
 }
 
-async function save(history, fileName, buggy){
+async function save(repo, history, fileName, buggy){
   const commit = await repo.getCommit(history[0]['commit'].id());
   const entry = await commit.getEntry(fileName);
   const source = await entry.getBlob();
@@ -118,10 +117,8 @@ async function save(history, fileName, buggy){
 }
 
 async function saveMetrics(cloneURL) {
-  Model = await orm.getCollection();
-
   console.log("Cloning repo: "+cloneURL);
-  repo = await nodegit.Clone(cloneURL, localPath, {}).catch(function (){
+  const repo = await nodegit.Clone(cloneURL, localPath, {}).catch(function (){
     console.log("Error, now trying local!");
     return nodegit.Repository.open(localPath);
   });
@@ -130,8 +127,7 @@ async function saveMetrics(cloneURL) {
   const history = firstCommit.history(nodegit.Revwalk.SORT.TIME);
 
   history.on("end", async function (commits) {
-    for (var i = 0; i < commits.length; i++) {
-      commit = commits[i];
+    for(const commit of commits){
       if (isBuggy(commit.message())){
         //see which files were affected by this commit
         const diffList = await commit.getDiff();
@@ -148,8 +144,8 @@ async function saveMetrics(cloneURL) {
               walker.sorting(nodegit.Revwalk.SORT.Time);
               const historyCommits = await walker.fileHistoryWalk(fileName, 10000);
 
-              save(historyCommits, fileName, false); //save good mertics
-              save(historyCommits.slice(1), fileName, true); // save buggy metrics
+              save(repo, historyCommits, fileName, false); //save good mertics
+              save(repo, historyCommits.slice(1), fileName, true); // save buggy metrics
             }
           }
         }
@@ -160,4 +156,4 @@ async function saveMetrics(cloneURL) {
   history.start();
 }
 
-module.exports = { saveMetrics };
+module.exports = { saveMetrics, save };

@@ -2,8 +2,8 @@ const tf = require('@tensorflow/tfjs');
 const tf_cpu = require('@tensorflow/tfjs-node'); // run on CPU
 const data = require('./data');
 
-const TEST_SPLIT = 0.15;
-const NUM_EPOCHS = 200;
+const TEST_SPLIT = 0.30;
+const NUM_EPOCHS = 10;
 
 async function run() {
 
@@ -18,6 +18,10 @@ async function run() {
         // See the loss and accuracy values at the end of every training epoch.
         console.log((1 + epoch) + ": ", logs.val_loss, logs.val_acc);
       },
+      onTrainEnd: async () => {
+        const saveResults = await model.save("file://saved-model");
+        console.log(saveResults);
+      }
     }
   });
 }

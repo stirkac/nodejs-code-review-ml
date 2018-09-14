@@ -1,7 +1,7 @@
 const tf = require('@tensorflow/tfjs');
 const orm = require('./orm');
 
-const CLASSES = ['buggy', 'clean'];
+const CLASSES = ['rejected', 'correct'];
 const LEARNING_RATE = 0.01;
 
 var rawMetrics = null;
@@ -118,4 +118,4 @@ function convertToTensors(data, targets, testSplit) {
   return [xTrain, yTrain, xTest, yTest];
 }
 
-module.exports = { getData, getModel };
+module.exports = { getData, getModel, CLASSES };

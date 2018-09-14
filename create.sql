@@ -22,7 +22,7 @@ CREATE TABLE "public"."code_metric" (
   "time_since_bug" float8 NOT NULL,
   "commit_count" float8 NOT NULL,
   "author_count" float8 NOT NULL,
-  "is_buggy" boolean NOT NULL,
+  "is_buggy" boolean,
   "filename" varchar(1024) UNIQUE NOT NULL,
   PRIMARY KEY ("id")
 )
