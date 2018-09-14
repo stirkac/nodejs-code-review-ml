@@ -112,11 +112,12 @@ async function save(repo, history, fileName, buggy){
     ...processMetrics,
     ...{ "filename": fileName+"@"+history[0]['commit'].id() }
   }
-  console.log(metrics)
   return Model.create(metrics);
 }
 
 async function saveMetrics(cloneURL) {
+  Model = await orm.getCollection();
+
   console.log("Cloning repo: "+cloneURL);
   const repo = await nodegit.Clone(cloneURL, localPath, {}).catch(function (){
     console.log("Error, now trying local!");
