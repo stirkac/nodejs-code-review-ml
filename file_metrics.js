@@ -57,6 +57,9 @@ async function save(repo, history, fileName, buggy){
   const commit = await repo.getCommit(history[0]['commit'].id());
   const entry = await commit.getEntry(fileName);
   const source = await entry.getBlob();
+  console.log(/test/gi.test(fileName));
+  console.log(fileName);
+  console.log("---");
   const codeMetrics = getCodeMetrics(source.toString());
 
   var authors = [];
@@ -137,8 +140,7 @@ async function saveMetrics(cloneURL) {
           for(const patch of patches){
             const fileName = patch.newFile().path();
             // let's ignore all non-js files, new additions and deletions
-            if (/.*\.js$/gi.test(fileName) && !patch.isDeleted() && !patch.isAdded()) {
-
+            if (/.*\.js$/gi.test(fileName) && !(/spec\/|test\//gi.test(fileName)) && !patch.isDeleted() && !patch.isAdded()) {
 
               var walker = repo.createRevWalk();
               walker.push(commit.sha());

@@ -10,8 +10,10 @@
     "predict": "node predict.js"
   },
   "dependencies": {
-    "@tensorflow/tfjs": "^0.12.2",
-    "@tensorflow/tfjs-node": "^0.1.9",
+    "@tensorflow/tfjs-layers": "^0.8.0",
+    "@tensorflow/tfjs-core": "^0.13.0",
+    "@tensorflow/tfjs-node": "0.1.17",
+    "@tensorflow/tfjs": "0.13.0",
     "nodegit": "^0.22.2",
     "sails-postgresql": "^1.0.1",
     "typhonjs-escomplex": "^0.0.12",

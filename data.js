@@ -2,7 +2,7 @@ const tf = require('@tensorflow/tfjs');
 const orm = require('./orm');
 
 const CLASSES = ['rejected', 'correct'];
-const LEARNING_RATE = 0.01;
+const LEARNING_RATE = 0.001;
 
 var rawMetrics = null;
 
@@ -40,7 +40,7 @@ async function getModel() {
   model.compile({
     optimizer: optimizer,
     loss: 'categoricalCrossentropy',
-    metrics: ['accuracy'],
+    metrics: ['accuracy', 'categoricalCrossentropy', 'precision', 'recall'],
   });
   return model;
 }
